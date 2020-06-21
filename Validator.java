@@ -17,60 +17,55 @@ public class Validator implements ConstraintValidator<RegularAmountConstraint, O
     	associatedNumber.put("YEAR", 52);
     }
  
-	//Must be implemented with ConstraintValidator interface, but not required here.
 	@Override
 	public void boolean isValid(Object regAmount, 
 		      ConstraintValidatorContext context) {
-		
-	}
-	
-	public void boolean invalidAmount(Object regAmount, ConstraintValidator context){
+		Frequency freq = regAmount.getFrequency();
+    	String amount = regAmount.getAmount();
+    	
 		String nonNumber = ("\D");
-		if (regAmount.getFrequency() != null && regAmount.getAmount() == "" || regAmount.getAmount() == nonNumber) {
+		if (freq != null && amount == "" || amount == nonNumber) {
 			return true;
 		}
-	}
-    
-    public void boolean nullFrequency(Object regAmount, ConstraintValidator context) {
-    	if(regAmount.getFrequency()== null && regAmount.getAmount() != "") {
+		if(freq== null && amount != "") {
     		return true;
     	}
-    }
-    
-    public void boolean weekly(Object regAmount, ConstraintValidator context) {
-    	Frequency freqTimePeriod = Frequency.WEEK;
-    	if(regAmount.getFrequency() == freqTimePeriod && regAmount.getAmount() != null) {
+		Frequency freqTimePeriodWeek = Frequency.WEEK;
+    	if(freq == freqTimePeriod && amount != null) {
     		return true;
     	}
-    }
- 
-    public void boolean monthly(Object regAmount, ConstraintValidator context) {
-    	Frequency freqTimePeriod = Frequency.MONTH;
-    	if(regAmount.getFrequency() == freqTimePeriod && regAmount.getAmount() != null) {
+    	Frequency freqTimePeriodMonth = Frequency.MONTH;
+    	if(freq == freqTimePeriod && amount != null) {
     		return true;
     	}
-    }
-    
-    public void boolean validatedAsValid(Object regAmount, ConstraintValidator context) {
-    	Frequency freq = regAmount.getFrequency();
-    	String amount = regAmount.getAmount();
     	int intAmount=Integer.parseInt(amount);  
-    	if(assocaitedNumber.containsKey(freq) && intAmount % freq ==0) {
+    	if(associatedNumber.containsKey(freq) && intAmount % freq ==0) {
     		return true;
     	}
-    }
-    
-    public void boolean validatedAsInvalid(Object regAmount, ConstraintValidator context) {
-    	Frequency freq = regAmount.getFrequency();
-    	String amount = regAmount.getAmount();
     	int intAmount=Integer.parseInt(amount);  
     	if(assocaitedNumber.containsKey(freq) && intAmount % freq !=0) {
     		context.message();
     		return false;
     	}
-    }
-    
+	}
 }
+	
+	
+	
+    
+   
+    
+    
+    
+ 
+    
+    
+   
+    
+    
+    
+    
+
 
 
 	
